@@ -1,4 +1,6 @@
 ﻿@inherits LayoutComponentBase
+@inject AuthState AuthState
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -6,7 +8,26 @@
 
     <main>
         <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+            @if (!AuthState.IsAuthenticated)
+            {
+                <NavLink class="ml-md-auto" href="login">
+                    Login
+                </NavLink>
+                <NavLink class="ml-md-auto" href="register">
+                    Register
+                </NavLink>
+            }
+            else
+            {
+                <span class="ml-md-auto">Logged in as <strong>@AuthState.Username</strong></span>
+                <NavLink class="ml-md-auto" href="logout">
+                    Logout
+                </NavLink>
+            }
+
+            <NavLink class="ml-md-auto" href="settings">
+                Settings
+            </NavLink>
         </div>
 
         <article class="content px-4">
@@ -14,3 +35,16 @@
         </article>
     </main>
 </div>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        AuthState.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        AuthState.OnChange -= StateHasChanged;
+    }
+}
