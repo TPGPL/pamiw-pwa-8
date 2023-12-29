@@ -1,0 +1,60 @@
+﻿@page "/books/{Id:int}"
+@inject IBookService service
+@inject NavigationManager navManager
+
+<PageTitle>PWA - Update book</PageTitle>
+
+<h3>Update book @Id</h3>
+
+@if (book is null)
+{
+    <p>@message</p>
+}
+else
+{
+    @if (updateMessage is not null)
+    {
+        <p class="alert alert-danger">Error: @updateMessage</p>
+    }
+
+    <BookForm book="book" OnValidSubmit="HandleSubmit" />
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private Book? book;
+    private String? message = "Loading...";
+    private String? updateMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await service.GetBookAsync(Id);
+
+        if (!response.Success)
+        {
+            message = response.Message;
+            return;
+        }
+
+        book = response.Data;
+    }
+
+    public async Task HandleSubmit()
+    {
+        if (book is null)
+        {
+            return;
+        }
+
+        var response = await service.UpdateBookAsync(Id, book);
+
+        if (!response.Success)
+        {
+            updateMessage = response.Message;
+            return;
+        }
+
+        navManager.NavigateTo("/books");
+    }
+}

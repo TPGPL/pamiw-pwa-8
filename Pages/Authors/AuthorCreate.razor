@@ -1,0 +1,35 @@
+﻿@page "/authors/create"
+@inject IAuthorService service
+@inject NavigationManager manager
+
+<PageTitle>PWA - Create author</PageTitle>
+
+<h3>Create author</h3>
+
+@if (author is not null)
+{
+    @if (message is not null)
+    {
+        <p class="alert alert-danger">Error: @message</p>
+    }
+
+    <AuthorForm author="author" OnValidSubmit="HandleSubmit" />
+}
+
+@code {
+    private Author author = new Author();
+    private String? message = null;
+
+    public async Task HandleSubmit()
+    {
+        var response = await service.CreateAuthorAsync(author);
+
+        if (!response.Success)
+        {
+            message = response.Message;
+            return;
+        }
+
+        manager.NavigateTo("/authors");
+    }
+}

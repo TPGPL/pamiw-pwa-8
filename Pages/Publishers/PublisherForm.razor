@@ -1,0 +1,17 @@
+﻿<EditForm Model="publisher" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+
+    <div class="form-group">
+        <label for="name">Name</label>
+        <InputText id="name" @bind-Value="publisher.Name" class="form-control"></InputText>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</EditForm>
+
+@code {
+    [Parameter]
+    public Publisher publisher { get; set; }
+
+    [Parameter]
+    public EventCallback OnValidSubmit { get; set; }
+}

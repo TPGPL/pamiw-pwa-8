@@ -1,0 +1,137 @@
+﻿@page "/publishers"
+@inject IPublisherService service
+@inject NavigationManager navManager
+
+<PageTitle>PWA - Publishers</PageTitle>
+
+<h1>Publisher List</h1>
+
+@if (publishers is null)
+{
+    <p>@message</p>
+}
+else if (!publishers.Any())
+{
+    <p>No data to show.</p>
+}
+else
+{
+    <button class="btn btn-primary" @onclick="CreateAction">Create new publisher</button>
+    <table class="table table-striped align-middle">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var publisher in publishers)
+            {
+                <tr>
+                    <th scope="row">@publisher.Id</th>
+                    <td>@publisher.Name</td>
+                    <td>
+                        <button class="btn btn-primary" @onclick="() => EditAction(publisher.Id)">Update</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteAction(publisher.Id)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <ul class="pagination">
+        <li class="page-item">
+            <button class="page-link" @onclick="PreviousPage">Prev</button>
+        </li>
+        <li class="page-item active">
+            <span class="page-link">@currentPage</span>
+        </li>
+        <li class="page-item">
+            <button class="page-link" @onclick="NextPage">Next</button>
+        </li>
+    </ul>
+}
+
+@code {
+    private List<Publisher>? publishers;
+    private readonly int dataPerPage = 10;
+    private int currentPage = 1;
+    private int totalPages;
+    private string? message = "Loading...";
+
+    protected override async Task OnInitializedAsync()
+    {
+        publishers = await GetPublishersAsync();
+    }
+
+    protected async Task<List<Publisher>?> GetPublishersAsync()
+    {
+        var response = await service.GetPublishersAsync();
+
+        if (!response.Success)
+        {
+            message = response.Message;
+            return null;
+        }
+
+        var data = response.Data;
+
+        if (data is null || !data.Any())
+        {
+            return data;
+        }
+
+        totalPages = (data.Count / dataPerPage) + 1;
+
+        if (data.Count % dataPerPage == 0)
+        {
+            totalPages--;
+        }
+
+        while (currentPage > totalPages)
+        {
+            currentPage--;
+        }
+
+        int dataToFetch = currentPage == totalPages && data.Count % dataPerPage != 0 ? data.Count % dataPerPage : dataPerPage;
+
+        return data.GetRange((currentPage - 1) * dataPerPage, dataToFetch);
+    }
+
+    protected void CreateAction()
+    {
+        navManager.NavigateTo($"/publishers/create");
+    }
+
+    protected void EditAction(int id)
+    {
+        navManager.NavigateTo($"/publishers/{id}");
+    }
+
+    protected async Task DeleteAction(int id)
+    {
+        await service.DeletePublisherAsync(id);
+
+        publishers = await GetPublishersAsync();
+    }
+
+    protected async Task PreviousPage()
+    {
+        if (currentPage > 1)
+        {
+            currentPage--;
+
+            publishers = await GetPublishersAsync();
+        }
+    }
+    protected async Task NextPage()
+    {
+        if (currentPage < totalPages)
+        {
+            currentPage++;
+
+            publishers = await GetPublishersAsync();
+        }
+    }
+}

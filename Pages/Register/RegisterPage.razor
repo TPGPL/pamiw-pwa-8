@@ -1,0 +1,28 @@
+﻿@page "/register"
+@inject IAuthService service
+@inject NavigationManager manager
+
+<h3>Sign up:</h3>
+
+@if (message is not null)
+{
+    <p class="alert @buttonClass">@message</p>
+}
+
+<RegisterForm user="user" OnValidSubmit="HandleSubmit" />
+
+@code {
+    private UserRegister user = new UserRegister();
+    private string? message;
+    private string? buttonClass = string.Empty;
+
+
+    public async Task HandleSubmit()
+    {
+        var response = await service.RegisterAsync(user);
+
+        buttonClass = response.Success ? "alert-success" : "alert-danger";
+
+        message = response.Message;
+    }
+}

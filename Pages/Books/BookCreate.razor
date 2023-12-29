@@ -1,0 +1,34 @@
+﻿@page "/books/create"
+@inject IBookService service
+@inject NavigationManager manager
+
+<PageTitle>PWA - Create book</PageTitle>
+
+<h3>Create book</h3>
+
+@if (book is not null)
+{
+    @if (message is not null)
+    {
+        <p class="alert alert-danger">Error: @message</p>
+    }
+
+    <BookForm book="book" OnValidSubmit="HandleSubmit" />
+}
+@code {
+    private Book book = new Book();
+    private string? message;
+
+    public async Task HandleSubmit()
+    {
+        var response = await service.CreateBookAsync(book);
+
+        if (!response.Success)
+        {
+            message = response.Message;
+            return;
+        }
+
+        manager.NavigateTo("/books");
+    }
+}

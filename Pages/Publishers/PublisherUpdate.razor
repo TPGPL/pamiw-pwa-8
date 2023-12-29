@@ -1,0 +1,60 @@
+﻿@page "/publishers/{Id:int}"
+@inject IPublisherService service
+@inject NavigationManager navManager
+
+<PageTitle>PWA - Update publisher</PageTitle>
+
+<h3>Update publisher @Id</h3>
+
+@if (publisher is null)
+{
+    <p>@message</p>
+}
+else
+{
+    @if (updateMessage is not null)
+    {
+        <p class="alert alert-danger">Error: @updateMessage</p>
+    }
+
+    <PublisherForm publisher="publisher" OnValidSubmit="HandleSubmit" />
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private Publisher? publisher;
+    private string? message = "Loading...";
+    private string? updateMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await service.GetPublisherAsync(Id);
+
+        if (!response.Success)
+        {
+            message = response.Message;
+            return;
+        }
+
+        publisher = response.Data;
+    }
+
+    public async Task HandleSubmit()
+    {
+        if (publisher is null)
+        {
+            return;
+        }
+
+        var response = await service.UpdatePublisherAsync(Id, publisher);
+
+        if (!response.Success)
+        {
+            updateMessage = response.Message;
+            return;
+        }
+
+        navManager.NavigateTo("/publishers");
+    }
+}

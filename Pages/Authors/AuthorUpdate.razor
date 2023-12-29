@@ -1,0 +1,59 @@
+﻿@page "/authors/{Id:int}"
+@inject IAuthorService service
+@inject NavigationManager navManager
+
+<PageTitle>PWA - Update author</PageTitle>
+
+<h3>Update author @Id</h3>
+
+@if (author is null)
+{
+    <p>@message</p>
+} else
+{
+    if (updateMessage is not null)
+    {
+        <p class="alert alert-danger">Error: @updateMessage</p>
+    }
+
+    <AuthorForm author="author" OnValidSubmit="HandleSubmit" />
+}
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+    private Author? author;
+    private String? message = "Loading...";
+    private String? updateMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await service.GetAuthorAsync(Id);
+
+        if (!response.Success)
+        {
+            message = response.Message;
+            return;
+        }
+
+        author = response.Data;
+    }
+
+    public async Task HandleSubmit()
+    {
+        if (author is null)
+        {
+            return;    
+        }
+
+        var response = await service.UpdateAuthorAsync(Id, author);
+
+        if (!response.Success)
+        {
+            updateMessage = response.Message;
+            return;
+        }
+
+        navManager.NavigateTo("/authors");
+    }
+}

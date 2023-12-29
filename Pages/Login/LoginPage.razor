@@ -1,0 +1,35 @@
+﻿@page "/login"
+@inject IAuthService service
+@inject NavigationManager manager
+@inject HttpClient httpClient
+@inject AuthState authState
+
+<h3>Sign in:</h3>
+
+@if (message is not null)
+{
+    <p class="alert alert-danger">Error: @message</p>
+}
+
+<LoginForm user="user" OnValidSubmit="HandleSubmit" />
+
+@code {
+    private UserLogin user = new UserLogin();
+    private string? message;
+
+    public async Task HandleSubmit()
+    {
+        var response = await service.LoginAsync(user);
+
+        if (!response.Success)
+        {
+            message = response.Message;
+            return;
+        }
+
+        httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", response.Data);
+        authState.SetAuth(true, user.Username);
+
+        manager.NavigateTo("/");
+    }
+}
