@@ -16,4 +16,6 @@ builder.Services.AddSingleton<IAuthService, AuthService>();
 
 builder.Services.AddSingleton<AuthState>();
 
+builder.Services.AddLocalization();
+
 await builder.Build().RunAsync();
