@@ -49,7 +49,7 @@ public class AuthState
         var handler = new JwtSecurityTokenHandler();
         var jwt = handler.ReadJwtToken(token);
 
-        if (jwt.ValidTo < new DateTime())
+        if (jwt.ValidTo < DateTime.Now)
         {
             await _localStorageService.RemoveItemAsync("jwtToken");
 
