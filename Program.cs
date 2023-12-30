@@ -4,6 +4,8 @@ using Blazored.LocalStorage;
 using PamiwPwa;
 using PamiwPwa.Security;
 using PamiwShared.Services;
+using Microsoft.JSInterop;
+using System.Globalization;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -17,7 +19,27 @@ builder.Services.AddSingleton<IAuthService, AuthService>();
 
 builder.Services.AddSingleton<AuthState>();
 
-builder.Services.AddLocalization();
 builder.Services.AddBlazoredLocalStorageAsSingleton();
 
-await builder.Build().RunAsync();
+builder.Services.AddLocalization();
+
+var host = builder.Build();
+
+CultureInfo culture;
+var js = host.Services.GetRequiredService<IJSRuntime>();
+var result = await js.InvokeAsync<string>("blazorCulture.get");
+
+if (result != null)
+{
+    culture = new CultureInfo(result);
+}
+else
+{
+    culture = new CultureInfo("en-US");
+    await js.InvokeVoidAsync("blazorCulture.set", "en-US");
+}
+
+CultureInfo.DefaultThreadCurrentCulture = culture;
+CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+await host.RunAsync();
