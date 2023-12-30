@@ -1,11 +1,12 @@
 ﻿@page "/"
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<PageTitle>PWA - Home</PageTitle>
+<PageTitle>[PAMIW] @Loc["HomeHeader"]</PageTitle>
 
-<h1>PWA App</h1>
+    <h1>@Loc["HomeHeader"]</h1>
 
-Home of the PAMIW PWA application.
+@Loc["HomeText"]
 
 @code {
     protected override async Task OnInitializedAsync()

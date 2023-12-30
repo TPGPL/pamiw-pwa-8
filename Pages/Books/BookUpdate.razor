@@ -2,10 +2,11 @@
 @inject IBookService service
 @inject NavigationManager manager
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<PageTitle>PWA - Update book</PageTitle>
+<PageTitle>[PAMIW] @Loc["EditBookHeader"]</PageTitle>
 
-<h3>Update book @Id</h3>
+    <h1>@Loc["EditBookHeader"]</h1>
 
 @if (book is null)
 {
@@ -15,7 +16,7 @@ else
 {
     @if (updateMessage is not null)
     {
-        <p class="alert alert-danger">Error: @updateMessage</p>
+        <p class="alert alert-danger">@Loc["ErrorLabel"] @updateMessage</p>
     }
 
     <BookForm book="book" OnValidSubmit="HandleSubmit" />
@@ -25,11 +26,12 @@ else
     [Parameter]
     public int Id { get; set; }
     private Book? book;
-    private String? message = "Loading...";
+    private String? message;
     private String? updateMessage;
 
     protected override async Task OnInitializedAsync()
     {
+        message = Loc["LoadingLabel"];
         if (!await authState.TryAuthenticateAsync())
         {
             manager.NavigateTo("/login");

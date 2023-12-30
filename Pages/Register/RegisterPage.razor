@@ -2,8 +2,11 @@
 @inject IAuthService service
 @inject NavigationManager manager
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<h3>Sign up:</h3>
+<PageTitle>[PAMIW] @Loc["RegisterHeader"]</PageTitle>
+
+    <h1>@Loc["RegisterHeader"]</h1>
 
 @if (message is not null)
 {

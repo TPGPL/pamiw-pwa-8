@@ -150,14 +150,23 @@
   <data name="ConfirmPasswordPlaceholder" xml:space="preserve">
     <value>Confirm password</value>
   </data>
+  <data name="CreateAuthorButton" xml:space="preserve">
+    <value>Create new author</value>
+  </data>
   <data name="CreateAuthorHeader" xml:space="preserve">
     <value>Create author</value>
+  </data>
+  <data name="CreateBookButton" xml:space="preserve">
+    <value>Create new book</value>
   </data>
   <data name="CreateBookHeader" xml:space="preserve">
     <value>Create book</value>
   </data>
   <data name="CreateButton" xml:space="preserve">
     <value>Create</value>
+  </data>
+  <data name="CreatePublisherButton" xml:space="preserve">
+    <value>Create new publisher</value>
   </data>
   <data name="CreatePublisherHeader" xml:space="preserve">
     <value>Create publisher</value>
@@ -176,6 +185,9 @@
   </data>
   <data name="EmailPlaceholder" xml:space="preserve">
     <value>Email</value>
+  </data>
+  <data name="ErrorLabel" xml:space="preserve">
+    <value>Error:</value>
   </data>
   <data name="GeoAltitude" xml:space="preserve">
     <value>Altitude</value>
@@ -199,10 +211,13 @@
     <value>Home</value>
   </data>
   <data name="HomeText" xml:space="preserve">
-    <value>Home of the Pamiw MAUI App.</value>
+    <value>Home of the Pamiw PWA App.</value>
   </data>
   <data name="LanguageLabel" xml:space="preserve">
     <value>Select app language</value>
+  </data>
+  <data name="LoadingLabel" xml:space="preserve">
+    <value>Loading...</value>
   </data>
   <data name="LoginButton" xml:space="preserve">
     <value>Sign in</value>
@@ -216,11 +231,23 @@
   <data name="LogoutButton" xml:space="preserve">
     <value>Sign out</value>
   </data>
+  <data name="LogoutMessage" xml:space="preserve">
+    <value>User logged out successfully.</value>
+  </data>
   <data name="NewButton" xml:space="preserve">
     <value>New</value>
   </data>
+  <data name="NextButton" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="NoData" xml:space="preserve">
+    <value>No data to show.</value>
+  </data>
   <data name="PasswordPlaceholder" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="PrevButton" xml:space="preserve">
+    <value>Prev</value>
   </data>
   <data name="PublisherName" xml:space="preserve">
     <value>Name</value>
@@ -245,6 +272,9 @@
   </data>
   <data name="SettingsHeader" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="SubmitButton" xml:space="preserve">
+    <value>Submit</value>
   </data>
   <data name="ThemeLabel" xml:space="preserve">
     <value>Select app theme</value>

@@ -2,10 +2,11 @@
 @inject IAuthorService service
 @inject NavigationManager manager
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<PageTitle>PWA - Authors</PageTitle>
+<PageTitle>[PAMIW] @Loc["AuthorsHeader"]</PageTitle>
 
-<h1>Author List</h1>
+    <h1>@Loc["AuthorsHeader"]</h1>
 
 @if (authors is null)
 {
@@ -13,18 +14,18 @@
 }
 else if (!authors.Any())
 {
-    <p>No data to show.</p>
+    <p>@Loc["NoData"]</p>
 }
 else
 {
-    <button class="btn btn-primary" @onclick="CreateAction">Create new author</button>
+    <button class="btn btn-primary" @onclick="CreateAction">@Loc["CreateAuthorButton"]</button>
     <table class="table table-striped align-middle">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Surname</th>
-                <th>Email</th>
+                <th>@Loc["AuthorName"]</th>
+                <th>@Loc["AuthorSurname"]</th>
+                <th>@Loc["EmailPlaceholder"]</th>
                 <th></th>
             </tr>
         </thead>
@@ -37,8 +38,8 @@ else
                     <td>@author.Surname</td>
                     <td>@author.Email</td>
                     <td>
-                        <button class="btn btn-primary" @onclick="() => EditAction(author.Id)">Update</button>
-                        <button class="btn btn-danger" @onclick="() => DeleteAction(author.Id)">Delete</button>
+                        <button class="btn btn-primary" @onclick="() => EditAction(author.Id)">@Loc["UpdateButton"]</button>
+                        <button class="btn btn-danger" @onclick="() => DeleteAction(author.Id)">@Loc["DeleteButton"]</button>
                     </td>
                 </tr>
             }
@@ -47,13 +48,13 @@ else
 
     <ul class="pagination">
         <li class="page-item">
-            <button class="page-link" @onclick="PreviousPage">Prev</button>
+            <button class="page-link" @onclick="PreviousPage">@Loc["PrevButton"]</button>
         </li>
         <li class="page-item active">
             <span class="page-link">@currentPage</span>
         </li>
         <li class="page-item">
-            <button class="page-link" @onclick="NextPage">Next</button>
+            <button class="page-link" @onclick="NextPage">@Loc["NextButton"]</button>
         </li>
     </ul>
 }
@@ -63,10 +64,12 @@ else
     private readonly int dataPerPage = 10;
     private int currentPage = 1;
     private int totalPages;
-    private string? message = "Loading...";
+    private string? message;
 
     protected override async Task OnInitializedAsync()
     {
+        message = Loc["LoadingLabel"];
+
         if (!await authState.TryAuthenticateAsync())
         {
             manager.NavigateTo("/login");

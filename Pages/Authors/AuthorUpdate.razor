@@ -2,10 +2,11 @@
 @inject IAuthorService service
 @inject NavigationManager manager
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<PageTitle>PWA - Update author</PageTitle>
+<PageTitle>[PAMIW] @Loc["EditAuthorHeader"]</PageTitle>
 
-<h3>Update author @Id</h3>
+    <h1>@Loc["EditAuthorHeader"]</h1>
 
 @if (author is null)
 {
@@ -15,7 +16,7 @@ else
 {
     if (updateMessage is not null)
     {
-        <p class="alert alert-danger">Error: @updateMessage</p>
+        <p class="alert alert-danger">@Loc["ErrorLabel"] @updateMessage</p>
     }
 
     <AuthorForm author="author" OnValidSubmit="HandleSubmit" />
@@ -25,11 +26,13 @@ else
     [Parameter]
     public int Id { get; set; }
     private Author? author;
-    private String? message = "Loading...";
+    private String? message;
     private String? updateMessage;
 
     protected override async Task OnInitializedAsync()
     {
+        message = Loc["LoadingLabel"];
+
         if (!await authState.TryAuthenticateAsync())
         {
             manager.NavigateTo("/login");

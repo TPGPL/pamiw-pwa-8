@@ -3,10 +3,13 @@
 @inject AuthState authState
 @inject NavigationManager manager
 @inject ILocalStorageService storageService
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<h3>Logout</h3>
+<PageTitle>[PAMIW] @Loc["LogoutButton"]</PageTitle>
 
-<p>User logged out successfully.</p>
+    <h1>@Loc["LogoutButton"]</h1>
+
+<p>@Loc["LogoutMessage"]</p>
 
 @code {
     protected override async Task OnInitializedAsync()

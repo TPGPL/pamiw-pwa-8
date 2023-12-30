@@ -2,16 +2,17 @@
 @inject IAuthorService service
 @inject NavigationManager manager
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<PageTitle>PWA - Create author</PageTitle>
+<PageTitle>[PAMIW] @Loc["CreateAuthorHeader"]</PageTitle>
 
-<h3>Create author</h3>
+    <h1>@Loc["CreateAuthorHeader"]</h1>
 
 @if (author is not null)
 {
     @if (message is not null)
     {
-        <p class="alert alert-danger">Error: @message</p>
+        <p class="alert alert-danger">@Loc["ErrorLabel"] @message</p>
     }
 
     <AuthorForm author="author" OnValidSubmit="HandleSubmit" />

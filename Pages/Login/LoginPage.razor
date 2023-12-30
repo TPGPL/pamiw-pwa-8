@@ -4,12 +4,15 @@
 @inject HttpClient httpClient
 @inject AuthState authState
 @inject ILocalStorageService storageService
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<h3>Sign in:</h3>
+<PageTitle>[PAMIW] @Loc["LoginHeader"]</PageTitle>
+
+    <h1>@Loc["LoginHeader"]</h1>
 
 @if (message is not null)
 {
-    <p class="alert alert-danger">Error: @message</p>
+    <p class="alert alert-danger">@Loc["ErrorLabel"] @message</p>
 }
 
 <LoginForm user="user" OnValidSubmit="HandleSubmit" />

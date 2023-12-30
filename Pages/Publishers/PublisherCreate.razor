@@ -2,16 +2,17 @@
 @inject IPublisherService service
 @inject NavigationManager manager
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
-<PageTitle>PWA - Create publisher</PageTitle>
+<PageTitle>[PAMIW] @Loc["CreatePublisherHeader"]</PageTitle>
 
-<h3>Create publisher</h3>
+    <h1>@Loc["CreatePublisherHeader"]</h1>
 
 @if (publisher is not null)
 {
     @if (message is not null)
     {
-        <p class="alert alert-danger">Error: @message</p>
+        <p class="alert alert-danger">@Loc["ErrorLabel"] @message</p>
     }
 
     <PublisherForm publisher="publisher" OnValidSubmit="HandleSubmit" />

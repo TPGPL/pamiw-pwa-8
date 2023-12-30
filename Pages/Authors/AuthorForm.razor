@@ -1,19 +1,21 @@
-﻿<EditForm Model="author" OnValidSubmit="OnValidSubmit">
+﻿@inject IStringLocalizer<Resources.AppResources> Loc
+
+<EditForm Model="author" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
 
     <div class="form-group">
-        <label for="name">Name</label>
+        <label for="name">@Loc["AuthorName"]</label>
         <InputText id="name" @bind-Value="author.Name" class="form-control"></InputText>
     </div>
     <div class="form-group">
-        <label for="surname">Surname</label>
+        <label for="surname">@Loc["AuthorSurname"]</label>
         <InputText id="surname" @bind-Value="author.Surname" class="form-control"></InputText>
     </div>
     <div class="form-group">
-        <label for="mail">Email</label>
+        <label for="mail">@Loc["EmailPlaceholder"]</label>
         <InputText id="mail" @bind-Value="author.Email" class="form-control"></InputText>
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">@Loc["SubmitButton"]</button>
 </EditForm>
 
 @code {

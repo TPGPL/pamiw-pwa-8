@@ -2,13 +2,16 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager manager
 @inject AuthState authState
+@inject IStringLocalizer<Resources.AppResources> Loc
 @using System.Globalization
 
-<h1>Settings</h1>
+<PageTitle>[PAMIW] @Loc["SettingsHeader"]</PageTitle>
+
+<h1>@Loc["SettingsHeader"]</h1>
 
 <div>
     <label class="form-label">
-        Select app language
+        @Loc["LanguageLabel"]
     </label>
     <select class="form-select" @bind="Culture">
         @foreach (var culture in supportedCultures)
@@ -24,7 +27,6 @@
     {
         await authState.TryAuthenticateAsync();
     }
-
 
     private CultureInfo[] supportedCultures = new[]
     {

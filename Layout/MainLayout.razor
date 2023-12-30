@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject AuthState AuthState
+@inject IStringLocalizer<Resources.AppResources> Loc
 
 <div class="page">
     <div class="sidebar">
@@ -11,22 +12,22 @@
             @if (!AuthState.IsAuthenticated)
             {
                 <NavLink class="ml-md-auto" href="login">
-                    Login
+                    @Loc["LoginButton"]
                 </NavLink>
                 <NavLink class="ml-md-auto" href="register">
-                    Register
+                    @Loc["RegisterButton"]
                 </NavLink>
             }
             else
             {
-                <span class="ml-md-auto">Logged in as <strong>@AuthState.Username</strong></span>
+                <span class="ml-md-auto">@Loc["LoginLabel"] <strong>@AuthState.Username</strong></span>
                 <NavLink class="ml-md-auto" href="logout">
-                    Logout
+                    @Loc["LogoutButton"]
                 </NavLink>
             }
 
             <NavLink class="ml-md-auto" href="settings">
-                Settings
+                @Loc["SettingsButton"]
             </NavLink>
         </div>
 
