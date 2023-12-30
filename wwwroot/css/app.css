@@ -17,7 +17,7 @@ a, .btn-link {
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .content {
@@ -105,7 +105,7 @@ code {
 .form-control-dark {
     background-color: #343a40;
     border: 1px solid #495057;
-    color:inherit;
+    color: inherit;
 }
 
     .form-control-dark:focus {
@@ -127,5 +127,17 @@ code {
         border-color: dodgerblue;
         -webkit-box-shadow: none;
         box-shadow: none;
+        color: inherit;
+    }
+
+.pagination-item-dark {
+    background-color: #343a40;
+    border-color: dodgerblue;
+    color: inherit;
+}
+
+    .pagination-item-dark:hover {
+        background-color: #2b3035;
+        border-color: dodgerblue;
         color: inherit;
     }

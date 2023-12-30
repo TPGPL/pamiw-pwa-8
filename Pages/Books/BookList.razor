@@ -55,13 +55,13 @@ else
 
     <ul class="pagination">
         <li class="page-item">
-            <button class="page-link" @onclick="PreviousPage">@Loc["PrevButton"]</button>
+            <button class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "pagination-item-dark" : null) page-link" @onclick="PreviousPage">@Loc["PrevButton"]</button>
         </li>
         <li class="page-item active">
             <span class="page-link">@currentPage</span>
         </li>
         <li class="page-item">
-            <button class="page-link" @onclick="NextPage">@Loc["NextButton"]</button>
+            <button class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "pagination-item-dark" : null) page-link" @onclick="NextPage">@Loc["NextButton"]</button>
         </li>
     </ul>
 }
