@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using Blazored.LocalStorage;
 using PamiwPwa;
 using PamiwPwa.Security;
 using PamiwShared.Services;
@@ -17,5 +18,6 @@ builder.Services.AddSingleton<IAuthService, AuthService>();
 builder.Services.AddSingleton<AuthState>();
 
 builder.Services.AddLocalization();
+builder.Services.AddBlazoredLocalStorageAsSingleton();
 
 await builder.Build().RunAsync();

@@ -3,6 +3,7 @@
 @inject NavigationManager manager
 @inject HttpClient httpClient
 @inject AuthState authState
+@inject ILocalStorageService storageService
 
 <h3>Sign in:</h3>
 
@@ -27,6 +28,7 @@
             return;
         }
 
+        await storageService.SetItemAsStringAsync("jwtToken", response.Data);
         httpClient.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", response.Data);
         authState.SetAuth(true, user.Username);
 

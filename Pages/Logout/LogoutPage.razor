@@ -1,15 +1,18 @@
 ﻿@page "/logout"
 @inject HttpClient _httpClient;
 @inject AuthState _authState;
+@inject ILocalStorageService storageService;
 
 <h3>Logout</h3>
 
 <p>User logged out successfully.</p>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         _httpClient.DefaultRequestHeaders.Authorization = null;
         _authState.SetAuth(false);
+
+        await storageService.RemoveItemAsync("jwtToken");
     }
 }
