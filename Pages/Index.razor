@@ -1,7 +1,15 @@
 ﻿@page "/"
+@inject AuthState authState
 
 <PageTitle>PWA - Home</PageTitle>
 
 <h1>PWA App</h1>
 
 Home of the PAMIW PWA application.
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        await authState.TryAuthenticateAsync();
+    }
+}

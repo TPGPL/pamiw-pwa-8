@@ -1,6 +1,7 @@
 ﻿@page "/books"
 @inject IBookService service
-@inject NavigationManager navManager
+@inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Books</PageTitle>
 
@@ -72,6 +73,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+
         books = await GetBooksAsync();
     }
 
@@ -111,12 +117,12 @@ else
 
     protected void CreateAction()
     {
-        navManager.NavigateTo($"/books/create");
+        manager.NavigateTo($"/books/create");
     }
 
     protected void EditAction(int id)
     {
-        navManager.NavigateTo($"/books/{id}");
+        manager.NavigateTo($"/books/{id}");
     }
 
     protected async Task DeleteAction(int id)

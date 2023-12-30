@@ -1,6 +1,7 @@
 ﻿@page "/register"
 @inject IAuthService service
 @inject NavigationManager manager
+@inject AuthState authState
 
 <h3>Sign up:</h3>
 
@@ -16,6 +17,13 @@
     private string? message;
     private string? buttonClass = string.Empty;
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/");
+        }
+    }
 
     public async Task HandleSubmit()
     {

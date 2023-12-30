@@ -1,6 +1,7 @@
 ﻿@page "/publishers/create"
 @inject IPublisherService service
 @inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Create publisher</PageTitle>
 
@@ -19,6 +20,14 @@
 @code {
     private Publisher publisher = new Publisher();
     private string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+    }
 
     public async Task HandleSubmit()
     {

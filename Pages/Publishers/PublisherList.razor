@@ -1,6 +1,7 @@
 ﻿@page "/publishers"
 @inject IPublisherService service
-@inject NavigationManager navManager
+@inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Publishers</PageTitle>
 
@@ -62,6 +63,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+
         publishers = await GetPublishersAsync();
     }
 
@@ -101,12 +107,12 @@ else
 
     protected void CreateAction()
     {
-        navManager.NavigateTo($"/publishers/create");
+        manager.NavigateTo($"/publishers/create");
     }
 
     protected void EditAction(int id)
     {
-        navManager.NavigateTo($"/publishers/{id}");
+        manager.NavigateTo($"/publishers/{id}");
     }
 
     protected async Task DeleteAction(int id)

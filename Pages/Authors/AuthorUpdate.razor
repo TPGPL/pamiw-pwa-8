@@ -1,6 +1,7 @@
 ﻿@page "/authors/{Id:int}"
 @inject IAuthorService service
-@inject NavigationManager navManager
+@inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Update author</PageTitle>
 
@@ -9,7 +10,8 @@
 @if (author is null)
 {
     <p>@message</p>
-} else
+}
+else
 {
     if (updateMessage is not null)
     {
@@ -28,6 +30,11 @@
 
     protected override async Task OnInitializedAsync()
     {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+
         var response = await service.GetAuthorAsync(Id);
 
         if (!response.Success)
@@ -43,7 +50,7 @@
     {
         if (author is null)
         {
-            return;    
+            return;
         }
 
         var response = await service.UpdateAuthorAsync(Id, author);
@@ -54,6 +61,6 @@
             return;
         }
 
-        navManager.NavigateTo("/authors");
+        manager.NavigateTo("/authors");
     }
 }

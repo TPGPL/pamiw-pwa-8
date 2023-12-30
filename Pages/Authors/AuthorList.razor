@@ -1,6 +1,7 @@
 ﻿@page "/authors"
 @inject IAuthorService service
-@inject NavigationManager navManager
+@inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Authors</PageTitle>
 
@@ -66,6 +67,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+
         authors = await GetAuthorsAsync();
     }
 
@@ -105,12 +111,12 @@ else
 
     protected void CreateAction()
     {
-        navManager.NavigateTo($"/authors/create");
+        manager.NavigateTo($"/authors/create");
     }
 
     protected void EditAction(int id)
     {
-        navManager.NavigateTo($"/authors/{id}");
+        manager.NavigateTo($"/authors/{id}");
     }
 
     protected async Task DeleteAction(int id)

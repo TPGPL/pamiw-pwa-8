@@ -1,6 +1,7 @@
 ﻿@page "/books/{Id:int}"
 @inject IBookService service
-@inject NavigationManager navManager
+@inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Update book</PageTitle>
 
@@ -29,6 +30,11 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+
         var response = await service.GetBookAsync(Id);
 
         if (!response.Success)
@@ -55,6 +61,6 @@ else
             return;
         }
 
-        navManager.NavigateTo("/books");
+        manager.NavigateTo("/books");
     }
 }

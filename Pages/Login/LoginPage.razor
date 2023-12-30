@@ -18,6 +18,14 @@
     private UserLogin user = new UserLogin();
     private string? message;
 
+    protected override async Task OnInitializedAsync()
+    {
+        if (await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/");
+        }
+    }
+
     public async Task HandleSubmit()
     {
         var response = await service.LoginAsync(user);

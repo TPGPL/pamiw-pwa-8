@@ -1,6 +1,7 @@
 ﻿@page "/authors/create"
 @inject IAuthorService service
 @inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Create author</PageTitle>
 
@@ -17,6 +18,14 @@
 }
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+    }
+
     private Author author = new Author();
     private String? message = null;
 

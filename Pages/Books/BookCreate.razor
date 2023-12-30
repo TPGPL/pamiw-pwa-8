@@ -1,6 +1,7 @@
 ﻿@page "/books/create"
 @inject IBookService service
 @inject NavigationManager manager
+@inject AuthState authState
 
 <PageTitle>PWA - Create book</PageTitle>
 
@@ -18,6 +19,14 @@
 @code {
     private Book book = new Book();
     private string? message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (!await authState.TryAuthenticateAsync())
+        {
+            manager.NavigateTo("/login");
+        }
+    }
 
     public async Task HandleSubmit()
     {

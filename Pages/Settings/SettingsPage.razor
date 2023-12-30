@@ -1,7 +1,26 @@
 ﻿@page "/settings"
+@inject IJSRuntime JSRuntime
+@inject NavigationManager manager
+@inject AuthState authState
+@using System.Globalization
 
-<h3>Settings</h3>
+<h1>Settings</h1>
+
+<select class="form-control form-select" @bind="selectedLanguage">
+    @foreach (var language in supportedLanguages)
+    {
+        <option value="@language">@language</option>
+    }
+</select>
+
 
 @code {
+    protected override async Task OnInitializedAsync()
+    {
+        await authState.TryAuthenticateAsync();
+    }
 
+    string[] supportedLanguages = [CultureInfo.GetCultureInfo("pl-PL").NativeName, CultureInfo.GetCultureInfo("en-US").NativeName];
+
+    string selectedLanguage = "pl (PL)";
 }
