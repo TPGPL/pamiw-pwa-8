@@ -18,6 +18,7 @@ builder.Services.AddSingleton<IBookService, BookService>();
 builder.Services.AddSingleton<IAuthService, AuthService>();
 
 builder.Services.AddSingleton<AuthState>();
+builder.Services.AddSingleton<ThemeSettings>();
 
 builder.Services.AddBlazoredLocalStorageAsSingleton();
 

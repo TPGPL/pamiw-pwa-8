@@ -2,6 +2,7 @@
 @inject IJSRuntime JSRuntime
 @inject NavigationManager manager
 @inject AuthState authState
+@inject ThemeSettings themeSettings
 @inject IStringLocalizer<Resources.AppResources> Loc
 @using System.Globalization
 
@@ -20,12 +21,37 @@
         }
     </select>
 </div>
+<div>
+    <label class="form-label">
+        @Loc["ThemeLabel"]
+    </label>
+    <select class="form-select" @bind="Theme">
+        @foreach (var theme in appThemes)
+        {
+            <option value="@theme">@theme.ToString()</option>
+        }
+    </select>
+</div>
 
 
 @code {
     protected override async Task OnInitializedAsync()
     {
         await authState.TryAuthenticateAsync();
+    }
+
+    private AppTheme[] appThemes = [AppTheme.Light, AppTheme.Dark];
+
+    private AppTheme Theme
+    {
+        get => themeSettings.CurrentTheme;
+        set
+        {
+            if (themeSettings.CurrentTheme != value)
+            {
+                themeSettings.SetTheme(value);    
+            }
+        }
     }
 
     private CultureInfo[] supportedCultures = new[]
