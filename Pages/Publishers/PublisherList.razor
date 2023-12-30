@@ -3,6 +3,7 @@
 @inject NavigationManager manager
 @inject AuthState authState
 @inject IStringLocalizer<Resources.AppResources> Loc
+@inject ThemeSettings themeSettings
 
 <PageTitle>[PAMIW] @Loc["PublishersHeader"]</PageTitle>
 
@@ -19,7 +20,7 @@ else if (!publishers.Any())
 else
 {
     <button class="btn btn-primary" @onclick="CreateAction">@Loc["CreatePublisherButton"]</button>
-    <table class="table table-striped align-middle">
+    <table class="table @(themeSettings.CurrentTheme == AppTheme.Dark ? "table-dark" : null) table-striped align-middle">
         <thead>
             <tr>
                 <th>ID</th>
