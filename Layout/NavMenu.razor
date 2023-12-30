@@ -1,7 +1,8 @@
 ﻿@inject AuthState AuthState;
 @inject IStringLocalizer<Resources.AppResources> Loc
+@inject ThemeSettings themeSettings
 
-<div class="top-row ps-3 navbar navbar-dark">
+<div class="top-row ps-3 navbar">
     <div class="container-fluid">
         <a class="navbar-brand" href="">PamiwAPP</a>
         <button title="Navigation menu" class="navbar-toggler" @onclick="ToggleNavMenu">
@@ -12,24 +13,24 @@
 
 <div class="@NavMenuCssClass nav-scrollable" @onclick="ToggleNavMenu">
     <nav class="flex-column">
-        <div class="nav-item px-3">
+        <div class="@(themeSettings.CurrentTheme == AppTheme.Light ? "nav-item-light" : null) nav-item px-3">
             <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
                 <span class="oi bi-house-fill" style="color:dodgerblue;" aria-hidden="true"></span> @Loc["HomeHeader"]
             </NavLink>
         </div>
         @if (AuthState.IsAuthenticated)
         {
-            <div class="nav-item px-3">
+            <div class="@(themeSettings.CurrentTheme == AppTheme.Light ? "nav-item-light" : null) nav-item px-3">
                 <NavLink class="nav-link" href="books">
                     <span class="oi bi-book-fill" style="color:dodgerblue;" aria-hidden="true"></span> @Loc["BooksHeader"]
                 </NavLink>
             </div>
-            <div class="nav-item px-3">
+            <div class="@(themeSettings.CurrentTheme == AppTheme.Light ? "nav-item-light" : null) nav-item px-3">
                 <NavLink class="nav-link" href="authors">
                     <span class="oi bi-person-fill" style="color:dodgerblue;" aria-hidden="true"></span> @Loc["AuthorsHeader"]
                 </NavLink>
             </div>
-            <div class="nav-item px-3">
+            <div class="@(themeSettings.CurrentTheme == AppTheme.Light ? "nav-item-light" : null) nav-item px-3">
                 <NavLink class="nav-link" href="publishers">
                     <span class="oi bi-building-fill" style="color:dodgerblue;" aria-hidden="true"></span> @Loc["PublishersHeader"]
                 </NavLink>
@@ -51,10 +52,12 @@
     protected override void OnInitialized()
     {
         AuthState.OnChange += StateHasChanged;
+        themeSettings.OnChange += StateHasChanged;
     }
 
     public void Dispose()
     {
         AuthState.OnChange -= StateHasChanged;
+        themeSettings.OnChange -= StateHasChanged;
     }
 }
