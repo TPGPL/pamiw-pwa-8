@@ -8,31 +8,32 @@
 
 <PageTitle>[PAMIW] @Loc["SettingsHeader"]</PageTitle>
 
-<h1>@Loc["SettingsHeader"]</h1>
+    <h1>@Loc["SettingsHeader"]</h1>
 
-<div>
-    <label class="form-label">
-        @Loc["LanguageLabel"]
-    </label>
-    <select class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "form-select-dark" : null) form-select" @bind="Culture">
-        @foreach (var culture in supportedCultures)
-        {
-            <option value="@culture">@culture.DisplayName</option>
-        }
-    </select>
+<div class="padded-form">
+    <div>
+        <label class="form-label">
+            @Loc["LanguageLabel"]
+        </label>
+        <select class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "form-select-dark" : null) form-select" @bind="Culture">
+            @foreach (var culture in supportedCultures)
+            {
+                <option value="@culture">@culture.DisplayName</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label class="form-label">
+            @Loc["ThemeLabel"]
+        </label>
+        <select class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "form-select-dark" : null) form-select" @bind="Theme">
+            @foreach (var theme in appThemes)
+            {
+                <option value="@theme">@theme.ToString()</option>
+            }
+        </select>
+    </div>
 </div>
-<div>
-    <label class="form-label">
-        @Loc["ThemeLabel"]
-    </label>
-    <select class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "form-select-dark" : null) form-select" @bind="Theme">
-        @foreach (var theme in appThemes)
-        {
-            <option value="@theme">@theme.ToString()</option>
-        }
-    </select>
-</div>
-
 
 @code {
     protected override void OnInitialized()
@@ -59,7 +60,7 @@
         {
             if (themeSettings.CurrentTheme != value)
             {
-                themeSettings.SetTheme(value);    
+                themeSettings.SetTheme(value);
             }
         }
     }
