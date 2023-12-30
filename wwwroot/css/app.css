@@ -101,3 +101,31 @@ a, .btn-link {
 code {
     color: #c02d76;
 }
+
+.form-control-dark {
+    background-color: #343a40;
+    border: 1px solid #495057;
+    color:inherit;
+}
+
+    .form-control-dark:focus {
+        background-color: #343a40;
+        border-color: dodgerblue;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: inherit;
+    }
+
+.form-select-dark {
+    background-color: #343a40;
+    border: 1px solid #495057;
+    color: inherit;
+}
+
+    .form-select-dark:focus {
+        background-color: #343a40;
+        border-color: dodgerblue;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: inherit;
+    }

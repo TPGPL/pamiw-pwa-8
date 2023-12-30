@@ -1,11 +1,12 @@
 ﻿@inject IStringLocalizer<Resources.AppResources> Loc
+@inject ThemeSettings themeSettings
 
 <EditForm Model="publisher" OnValidSubmit="OnValidSubmit">
     <DataAnnotationsValidator />
 
     <div class="form-group">
         <label for="name">@Loc["PublisherName"]</label>
-        <InputText id="name" @bind-Value="publisher.Name" class="form-control"></InputText>
+        <InputText id="name" @bind-Value="publisher.Name" class="@inputClass"></InputText>
     </div>
     <button type="submit" class="btn btn-primary">@Loc["SubmitButton"]</button>
 </EditForm>
@@ -16,4 +17,11 @@
 
     [Parameter]
     public EventCallback OnValidSubmit { get; set; }
+
+    public string? inputClass;
+
+    protected override void OnInitialized()
+    {
+        inputClass = themeSettings.CurrentTheme == AppTheme.Dark ? "form-control-dark form-control" : "form-control";
+    }
 }

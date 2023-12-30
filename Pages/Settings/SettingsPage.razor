@@ -14,7 +14,7 @@
     <label class="form-label">
         @Loc["LanguageLabel"]
     </label>
-    <select class="form-select" @bind="Culture">
+    <select class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "form-select-dark" : null) form-select" @bind="Culture">
         @foreach (var culture in supportedCultures)
         {
             <option value="@culture">@culture.DisplayName</option>
@@ -25,7 +25,7 @@
     <label class="form-label">
         @Loc["ThemeLabel"]
     </label>
-    <select class="form-select" @bind="Theme">
+    <select class="@(themeSettings.CurrentTheme == AppTheme.Dark ? "form-select-dark" : null) form-select" @bind="Theme">
         @foreach (var theme in appThemes)
         {
             <option value="@theme">@theme.ToString()</option>
@@ -35,6 +35,16 @@
 
 
 @code {
+    protected override void OnInitialized()
+    {
+        themeSettings.OnChange += StateHasChanged;
+    }
+
+    public void Dispose()
+    {
+        themeSettings.OnChange -= StateHasChanged;
+    }
+
     protected override async Task OnInitializedAsync()
     {
         await authState.TryAuthenticateAsync();
