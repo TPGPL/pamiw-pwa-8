@@ -6,6 +6,8 @@ using PamiwPwa.Security;
 using PamiwShared.Services;
 using Microsoft.JSInterop;
 using System.Globalization;
+using Microsoft.IdentityModel.Tokens;
+using System.Runtime.CompilerServices;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -42,5 +44,24 @@ else
 
 CultureInfo.DefaultThreadCurrentCulture = culture;
 CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+var themeSettings = host.Services.GetRequiredService<ThemeSettings>();
+var storageTheme = await js.InvokeAsync<string>("appTheme.get");
+AppTheme initialTheme;
+
+if (storageTheme != null)
+{
+    initialTheme = storageTheme switch
+    {
+        "Dark" => AppTheme.Dark,
+        "Light" or _ => AppTheme.Light
+    };
+} else
+{
+    initialTheme = AppTheme.Light;
+    await js.InvokeVoidAsync("appTheme.set", "Light");
+}
+
+themeSettings.SetTheme(initialTheme);
 
 await host.RunAsync();

@@ -37,6 +37,10 @@
             get: () => window.localStorage['BlazorCulture'],
             set: (value) => window.localStorage['BlazorCulture'] = value
         };
+        window.appTheme = {
+            get: () => window.localStorage['AppTheme'],
+            set: (value) => window.localStorage['AppTheme'] = value
+        };
     </script>
 </body>
 </html>
