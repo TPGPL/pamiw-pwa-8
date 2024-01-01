@@ -6,8 +6,6 @@ using PamiwPwa.Security;
 using PamiwShared.Services;
 using Microsoft.JSInterop;
 using System.Globalization;
-using Microsoft.IdentityModel.Tokens;
-using System.Runtime.CompilerServices;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
