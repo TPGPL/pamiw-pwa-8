@@ -102,6 +102,20 @@ code {
     color: #c02d76;
 }
 
+.form-control-light {
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
+    color: inherit;
+}
+
+    .form-control-light:focus {
+        background-color: #e9ecef;
+        border-color: dodgerblue;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: inherit;
+    }
+
 .form-control-dark {
     background-color: #343a40;
     border: 1px solid #495057;
@@ -110,6 +124,20 @@ code {
 
     .form-control-dark:focus {
         background-color: #343a40;
+        border-color: dodgerblue;
+        -webkit-box-shadow: none;
+        box-shadow: none;
+        color: inherit;
+    }
+
+.form-select-light {
+    background-color: #e9ecef;
+    border: 1px solid #dee2e6;
+    color: inherit;
+}
+
+    .form-select-light:focus {
+        background-color: #e9ecef;
         border-color: dodgerblue;
         -webkit-box-shadow: none;
         box-shadow: none;
